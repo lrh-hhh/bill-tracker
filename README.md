@@ -41,7 +41,7 @@
 
 1. 克隆仓库
 ```bash
-git clone https://github.com/your-username/bill-tracker.git
+git clone https://github.com/lrh-hhh/bill-tracker.git
 cd bill-tracker
 ```
 

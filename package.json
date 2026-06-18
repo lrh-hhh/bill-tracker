@@ -5,13 +5,13 @@
   "private": true,
   "author": "",
   "license": "Apache-2.0",
-  "homepage": "https://your-username.github.io/bill-tracker",
+  "homepage": "https://lrh-hhh.github.io/bill-tracker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/bill-tracker.git"
+    "url": "https://github.com/lrh-hhh/bill-tracker.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/bill-tracker/issues"
+    "url": "https://github.com/lrh-hhh/bill-tracker/issues"
   },
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
