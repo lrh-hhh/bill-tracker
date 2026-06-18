@@ -1,11 +1,18 @@
 import Database from 'better-sqlite3';
 import type DatabaseType from 'better-sqlite3';
 import bcrypt from 'bcryptjs';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.join(__dirname, '..', 'data', 'bill-tracker.db');
+const dataDir = path.join(__dirname, '..', 'data');
+const dbPath = path.join(dataDir, 'bill-tracker.db');
+
+// 确保数据目录存在
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
 
 const db: DatabaseType.Database = new Database(dbPath);
 

@@ -17,6 +17,14 @@ export interface CreateBillInput {
   note?: string;
 }
 
+export interface MonthlyStats {
+  bills: Bill[];
+  categoryStats: Record<string, number>;
+  dailyStats: Record<string, number>;
+  totalExpense: number;
+  billCount: number;
+}
+
 export class BillModel {
   static findByUserId(userId: number): Bill[] {
     return db.prepare(
@@ -73,13 +81,16 @@ export class BillModel {
     return result.changes > 0;
   }
 
-  static getMonthlyStats(userId: number, month: string) {
+  static getMonthlyStats(userId: number, month: string): MonthlyStats {
+    // 使用 SQLite 的日期函数来计算月份范围
     const startDate = `${month}-01`;
-    const endDate = `${month}-31`;
+    const endDate = db.prepare(
+      "SELECT date(?, 'start of month', '+1 month', '-1 day') as date"
+    ).get(startDate) as { date: string };
     
     const bills = db.prepare(
       'SELECT * FROM bills WHERE user_id = ? AND date >= ? AND date <= ?'
-    ).all(userId, startDate, endDate) as Bill[];
+    ).all(userId, startDate, endDate.date) as Bill[];
     
     const categoryStats = bills.reduce((acc, bill) => {
       acc[bill.category] = (acc[bill.category] || 0) + bill.amount;
