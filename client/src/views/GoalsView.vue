@@ -111,8 +111,10 @@ async function loadData() {
     goals.value = goalsRes.data.goals;
     activeGoal.value = goalsRes.data.activeGoal ?? null;
     currentExpense.value = statsRes.data.totalExpense;
-  } catch (error) {
-    ElMessage.error('加载数据失败');
+  } catch (error: any) {
+    if (error.response?.status !== 401) {
+      ElMessage.error('加载数据失败');
+    }
   }
 }
 

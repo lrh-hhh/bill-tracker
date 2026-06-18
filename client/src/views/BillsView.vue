@@ -167,8 +167,10 @@ async function loadBills() {
     const hasFilters = Object.keys(activeFilters).length > 0;
     const response = await billsAPI.getAll(hasFilters ? activeFilters : undefined);
     bills.value = response.data;
-  } catch (error) {
-    ElMessage.error('加载账单失败');
+  } catch (error: any) {
+    if (error.response?.status !== 401) {
+      ElMessage.error('加载账单失败');
+    }
   }
 }
 
