@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { billsAPI, statisticsAPI, goalsAPI } from '../services/api';
 import * as echarts from 'echarts';
@@ -80,6 +80,7 @@ const stats = ref({
 const recentBills = ref<any[]>([]);
 const activeGoal = ref<any>(null);
 const chartRef = ref<HTMLElement>();
+let chart: echarts.ECharts | null = null;
 
 const goalProgress = computed(() => {
   if (!activeGoal.value) return 0;
@@ -102,7 +103,8 @@ onMounted(async () => {
     activeGoal.value = goalsRes.data.activeGoal;
     
     if (chartRef.value) {
-      const chart = echarts.init(chartRef.value);
+      chart?.dispose();
+      chart = echarts.init(chartRef.value);
       const option = {
         tooltip: {
           trigger: 'item'
@@ -135,6 +137,10 @@ onMounted(async () => {
   } catch (error) {
     console.error('Failed to load dashboard data:', error);
   }
+});
+
+onBeforeUnmount(() => {
+  chart?.dispose();
 });
 </script>
 

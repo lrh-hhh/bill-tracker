@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { statisticsAPI } from '../services/api';
 import * as echarts from 'echarts';
 import dayjs from 'dayjs';
@@ -43,12 +43,18 @@ const categoryChartRef = ref<HTMLElement>();
 const dailyChartRef = ref<HTMLElement>();
 const trendChartRef = ref<HTMLElement>();
 
-let categoryChart: echarts.ECharts;
-let dailyChart: echarts.ECharts;
-let trendChart: echarts.ECharts;
+let categoryChart: echarts.ECharts | null = null;
+let dailyChart: echarts.ECharts | null = null;
+let trendChart: echarts.ECharts | null = null;
 
 onMounted(() => {
   loadStatistics();
+});
+
+onBeforeUnmount(() => {
+  categoryChart?.dispose();
+  dailyChart?.dispose();
+  trendChart?.dispose();
 });
 
 async function loadStatistics() {
@@ -58,6 +64,7 @@ async function loadStatistics() {
     const stats = response.data;
     
     if (categoryChartRef.value) {
+      categoryChart?.dispose();
       categoryChart = echarts.init(categoryChartRef.value);
       categoryChart.setOption({
         title: {
@@ -93,6 +100,7 @@ async function loadStatistics() {
     }
     
     if (dailyChartRef.value) {
+      dailyChart?.dispose();
       dailyChart = echarts.init(dailyChartRef.value);
       const dates = Object.keys(stats.dailyStats).sort();
       const amounts = dates.map(date => stats.dailyStats[date]);
@@ -129,6 +137,7 @@ async function loadStatistics() {
       const trendResponse = await statisticsAPI.getTrend(6);
       const trendData = trendResponse.data;
 
+      trendChart?.dispose();
       trendChart = echarts.init(trendChartRef.value);
       trendChart.setOption({
         title: {
