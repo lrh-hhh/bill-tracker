@@ -23,8 +23,15 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+const isDirectRun = process.argv[1] && (
+  process.argv[1].endsWith('/index.ts') ||
+  process.argv[1].endsWith('/index.js')
+);
+
+if (isDirectRun) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
 
 export default app;
