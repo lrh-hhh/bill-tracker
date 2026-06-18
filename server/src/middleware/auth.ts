@@ -8,6 +8,9 @@ if (!JWT_SECRET) {
 
 export interface AuthRequest extends Request {
   userId?: number;
+  body: any;
+  params: any;
+  query: any;
 }
 
 export function authenticateToken(req: AuthRequest, res: Response, next: NextFunction) {

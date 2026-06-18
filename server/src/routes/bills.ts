@@ -1,4 +1,4 @@
-import { Router, Response } from 'express';
+import { Router, Request, Response } from 'express';
 import { BillModel, CreateBillInput } from '../models/bill.js';
 import { authenticateToken, AuthRequest } from '../middleware/auth.js';
 
@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/', authenticateToken, (req: AuthRequest, res: Response) => {
   try {
-    const { category, dateFrom, dateTo, search, sortBy, sortOrder } = req.query;
+    const { category, dateFrom, dateTo, search, sortBy, sortOrder } = req.query as any;
     const filters: { category?: string; dateFrom?: string; dateTo?: string; search?: string } = {};
     if (category && typeof category === 'string') filters.category = category;
     if (dateFrom && typeof dateFrom === 'string') filters.dateFrom = dateFrom;

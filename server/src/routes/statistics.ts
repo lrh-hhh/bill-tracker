@@ -1,4 +1,4 @@
-import { Router, Response } from 'express';
+import { Router, Request, Response } from 'express';
 import { BillModel } from '../models/bill.js';
 import { authenticateToken, AuthRequest } from '../middleware/auth.js';
 
@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/monthly', authenticateToken, (req: AuthRequest, res: Response) => {
   try {
-    const { month } = req.query;
+    const { month } = req.query as any;
 
     if (!month || typeof month !== 'string') {
       return res.status(400).json({ error: 'Month parameter is required (YYYY-MM format)' });

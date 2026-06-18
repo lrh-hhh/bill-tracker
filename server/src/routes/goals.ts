@@ -1,4 +1,4 @@
-import { Router, Response } from 'express';
+import { Router, Request, Response } from 'express';
 import { GoalModel } from '../models/goal.js';
 import { authenticateToken, AuthRequest } from '../middleware/auth.js';
 
