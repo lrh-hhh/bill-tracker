@@ -28,7 +28,7 @@ const stubs = {
   'el-row': { template: '<div><slot /></div>' },
   'el-col': { template: '<div><slot /></div>' },
   'el-table': { template: '<div><slot /></div>' },
-          'el-table-column': { template: '<div><slot :row="{ amount: 0, category: \"\", date: \"\", note: \"\" }" /></div>' },
+          'el-table-column': { template: '<div><slot :row="mockRow" /></div>', data() { return { mockRow: { amount: 0, category: '', date: '', note: '' } } } },
   'el-button': { template: '<button><slot /></button>' },
   'el-select': { template: '<select><slot /></select>' },
   'el-option': { template: '<option />' },
