@@ -44,21 +44,38 @@ export const authAPI = {
 };
 
 // 账单 API
+export interface BillFilters {
+  category?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  search?: string;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+}
+
 export const billsAPI = {
-  getAll: () => api.get<Bill[]>('/bills'),
-  
+  getAll: (filters?: BillFilters) => api.get<Bill[]>('/bills', { params: filters }),
+
   create: (data: CreateBillInput) => api.post<Bill>('/bills', data),
-  
+
   update: (id: number, data: Partial<CreateBillInput>) =>
     api.put<Bill>(`/bills/${id}`, data),
-  
+
   delete: (id: number) => api.delete(`/bills/${id}`)
 };
 
 // 统计 API
+export interface TrendData {
+  labels: string[];
+  totals: number[];
+}
+
 export const statisticsAPI = {
   getMonthly: (month: string) =>
-    api.get<MonthlyStats>('/statistics/monthly', { params: { month } })
+    api.get<MonthlyStats>('/statistics/monthly', { params: { month } }),
+
+  getTrend: (months?: number) =>
+    api.get<TrendData>('/statistics/trend', { params: { months } })
 };
 
 // 目标 API

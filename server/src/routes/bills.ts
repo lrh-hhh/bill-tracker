@@ -6,7 +6,22 @@ const router = Router();
 
 router.get('/', authenticateToken, (req: AuthRequest, res: Response) => {
   try {
-    const bills = BillModel.findByUserId(req.userId!);
+    const { category, dateFrom, dateTo, search, sortBy, sortOrder } = req.query;
+    const filters: { category?: string; dateFrom?: string; dateTo?: string; search?: string } = {};
+    if (category && typeof category === 'string') filters.category = category;
+    if (dateFrom && typeof dateFrom === 'string') filters.dateFrom = dateFrom;
+    if (dateTo && typeof dateTo === 'string') filters.dateTo = dateTo;
+    if (search && typeof search === 'string') filters.search = search;
+
+    const sort = {
+      sortBy: typeof sortBy === 'string' ? sortBy : undefined,
+      sortOrder: sortOrder === 'asc' ? 'asc' as const : 'desc' as const
+    };
+
+    const hasFilters = Object.keys(filters).length > 0 || sortBy;
+    const bills = hasFilters
+      ? BillModel.findByUserIdFiltered(req.userId!, filters, sort)
+      : BillModel.findByUserId(req.userId!);
     res.json(bills);
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });

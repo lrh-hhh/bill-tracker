@@ -126,6 +126,9 @@ async function loadStatistics() {
     }
     
     if (trendChartRef.value) {
+      const trendResponse = await statisticsAPI.getTrend(6);
+      const trendData = trendResponse.data;
+
       trendChart = echarts.init(trendChartRef.value);
       trendChart.setOption({
         title: {
@@ -137,7 +140,7 @@ async function loadStatistics() {
         },
         xAxis: {
           type: 'category',
-          data: ['1月', '2月', '3月', '4月', '5月', '6月']
+          data: trendData.labels
         },
         yAxis: {
           type: 'value'
@@ -146,8 +149,8 @@ async function loadStatistics() {
           {
             name: '支出',
             type: 'line',
-            data: [stats.totalExpense * 0.8, stats.totalExpense * 0.9, stats.totalExpense, 
-                   stats.totalExpense * 1.1, stats.totalExpense * 0.95, stats.totalExpense * 1.05]
+            data: trendData.totals,
+            smooth: true
           }
         ]
       });

@@ -19,4 +19,14 @@ router.get('/monthly', authenticateToken, (req: AuthRequest, res: Response) => {
   }
 });
 
+router.get('/trend', authenticateToken, (req: AuthRequest, res: Response) => {
+  try {
+    const months = req.query.months ? parseInt(req.query.months as string) : 6;
+    const trend = BillModel.getTrendStats(req.userId!, months);
+    res.json(trend);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;
