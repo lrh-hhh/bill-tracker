@@ -23,6 +23,23 @@ const router = createRouter({
   routes: [{ path: '/', component: { template: '<div />' } }]
 });
 
+const stubs = {
+  'el-card': { template: '<div><slot /><slot name="header" /></div>' },
+  'el-row': { template: '<div><slot /></div>' },
+  'el-col': { template: '<div><slot /></div>' },
+  'el-table': { template: '<div><slot /></div>' },
+  'el-table-column': { template: '<div><slot :row="{}" /></div>' },
+  'el-button': { template: '<button><slot /></button>' },
+  'el-select': { template: '<select><slot /></select>' },
+  'el-option': { template: '<option />' },
+  'el-input': { template: '<input />' },
+  'el-date-picker': { template: '<input />' },
+  'el-dialog': { template: '<div><slot /></div>' },
+  'el-form': { template: '<form><slot /></form>' },
+  'el-form-item': { template: '<div><slot /></div>' },
+  'el-input-number': { template: '<input type="number" />' }
+};
+
 describe('BillsView', () => {
   beforeEach(() => {
     setActivePinia(createPinia());
@@ -32,22 +49,7 @@ describe('BillsView', () => {
     const wrapper = mount(BillsView, {
       global: {
         plugins: [router],
-        stubs: {
-          'el-card': { template: '<div><slot /><slot name="header" /></div>' },
-          'el-row': { template: '<div><slot /></div>' },
-          'el-col': { template: '<div><slot /></div>' },
-          'el-table': { template: '<div><slot /></div>' },
-          'el-table-column': { template: '<div><slot /></div>' },
-          'el-button': { template: '<button><slot /></button>' },
-          'el-select': { template: '<select><slot /></select>' },
-          'el-option': { template: '<option />' },
-          'el-input': { template: '<input />' },
-          'el-date-picker': { template: '<input />' },
-          'el-dialog': { template: '<div><slot /></div>' },
-          'el-form': { template: '<form><slot /></form>' },
-          'el-form-item': { template: '<div><slot /></div>' },
-          'el-input-number': { template: '<input type="number" />' }
-        }
+        stubs
       }
     });
 
@@ -59,22 +61,7 @@ describe('BillsView', () => {
     const wrapper = mount(BillsView, {
       global: {
         plugins: [router],
-        stubs: {
-          'el-card': { template: '<div><slot /><slot name="header" /></div>' },
-          'el-row': { template: '<div><slot /></div>' },
-          'el-col': { template: '<div><slot /></div>' },
-          'el-table': { template: '<div><slot /></div>' },
-          'el-table-column': { template: '<div><slot /></div>' },
-          'el-button': { template: '<button><slot /></button>' },
-          'el-select': { template: '<select><slot /></select>' },
-          'el-option': { template: '<option />' },
-          'el-input': { template: '<input />' },
-          'el-date-picker': { template: '<input />' },
-          'el-dialog': { template: '<div><slot /></div>' },
-          'el-form': { template: '<form><slot /></form>' },
-          'el-form-item': { template: '<div><slot /></div>' },
-          'el-input-number': { template: '<input type="number" />' }
-        }
+        stubs
       }
     });
 

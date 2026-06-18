@@ -13,6 +13,14 @@ const router = createRouter({
   routes: [{ path: '/', component: { template: '<div />' } }]
 });
 
+const stubs = {
+  'el-card': { template: '<div><slot /><slot name="header" /></div>' },
+  'el-form': { template: '<form @submit.prevent><slot /></form>' },
+  'el-form-item': { template: '<div><label v-if="label">{{ label }}</label><slot /></div>', props: ['label'] },
+  'el-input': { template: '<input />' },
+  'el-button': { template: '<button><slot /></button>' }
+};
+
 describe('LoginView', () => {
   beforeEach(() => {
     setActivePinia(createPinia());
@@ -22,13 +30,7 @@ describe('LoginView', () => {
     const wrapper = mount(LoginView, {
       global: {
         plugins: [router],
-        stubs: {
-          'el-card': { template: '<div><slot /><slot name="header" /></div>' },
-          'el-form': { template: '<form @submit.prevent><slot /></form>' },
-          'el-form-item': { template: '<div><slot /></div>' },
-          'el-input': { template: '<input />' },
-          'el-button': { template: '<button><slot /></button>' }
-        }
+        stubs
       }
     });
 
@@ -42,13 +44,7 @@ describe('LoginView', () => {
     const wrapper = mount(LoginView, {
       global: {
         plugins: [router],
-        stubs: {
-          'el-card': { template: '<div><slot /><slot name="header" /></div>' },
-          'el-form': { template: '<form @submit.prevent><slot /></form>' },
-          'el-form-item': { template: '<div><slot /></div>' },
-          'el-input': { template: '<input />' },
-          'el-button': { template: '<button><slot /></button>' }
-        }
+        stubs
       }
     });
 

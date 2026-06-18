@@ -1,4 +1,8 @@
 import request from 'supertest';
+
+// 设置测试环境变量
+process.env.JWT_SECRET = 'test-secret-key';
+
 import app from '../index.js';
 
 describe('Auth API', () => {
