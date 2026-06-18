@@ -84,7 +84,7 @@
         </el-form-item>
 
         <el-form-item label="日期">
-          <el-date-picker v-model="form.date" type="date" placeholder="选择日期" />
+          <el-date-picker v-model="form.date" type="date" value-format="YYYY-MM-DD" placeholder="选择日期" />
         </el-form-item>
 
         <el-form-item label="备注">

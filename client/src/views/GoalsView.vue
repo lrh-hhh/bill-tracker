@@ -55,11 +55,11 @@
         </el-form-item>
         
         <el-form-item label="开始日期">
-          <el-date-picker v-model="form.start_date" type="date" placeholder="选择开始日期" />
+          <el-date-picker v-model="form.start_date" type="date" value-format="YYYY-MM-DD" placeholder="选择开始日期" />
         </el-form-item>
         
         <el-form-item label="结束日期">
-          <el-date-picker v-model="form.end_date" type="date" placeholder="选择结束日期" />
+          <el-date-picker v-model="form.end_date" type="date" value-format="YYYY-MM-DD" placeholder="选择结束日期" />
         </el-form-item>
       </el-form>
       

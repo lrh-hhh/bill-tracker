@@ -52,19 +52,21 @@ export function initDatabase() {
     );
   `);
 
-  const testUsers = [
-    { username: 'test1', email: 'test1@example.com', password: 'password123' },
-    { username: 'test2', email: 'test2@example.com', password: 'password123' }
-  ];
+  if (process.env.NODE_ENV !== 'production') {
+    const testUsers = [
+      { username: 'test1', email: 'test1@example.com', password: 'password123' },
+      { username: 'test2', email: 'test2@example.com', password: 'password123' }
+    ];
 
-  const insertUser = db.prepare(`
-    INSERT OR IGNORE INTO users (username, email, password_hash)
-    VALUES (?, ?, ?)
-  `);
+    const insertUser = db.prepare(`
+      INSERT OR IGNORE INTO users (username, email, password_hash)
+      VALUES (?, ?, ?)
+    `);
 
-  for (const user of testUsers) {
-    const passwordHash = bcrypt.hashSync(user.password, 10);
-    insertUser.run(user.username, user.email, passwordHash);
+    for (const user of testUsers) {
+      const passwordHash = bcrypt.hashSync(user.password, 10);
+      insertUser.run(user.username, user.email, passwordHash);
+    }
   }
 }
 
