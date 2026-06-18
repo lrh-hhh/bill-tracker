@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { initDatabase } from './database.js';
 import authRoutes from './routes/auth.js';
 import billRoutes from './routes/bills.js';
@@ -22,6 +24,16 @@ app.use('/api/goals', goalRoutes);
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const clientDistPath = path.join(__dirname, '..', '..', 'client', 'dist');
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(clientDistPath));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(clientDistPath, 'index.html'));
+  });
+}
 
 const isDirectRun = process.argv[1] && (
   process.argv[1].endsWith('/index.ts') ||
