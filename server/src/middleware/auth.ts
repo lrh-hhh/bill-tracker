@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || (process.env.NODE_ENV === 'test' ? 'test-secret-key' : undefined);
+const JWT_SECRET = process.env.JWT_SECRET || 'bill-tracker-dev-secret-key-2024';
 if (!JWT_SECRET) {
   throw new Error('JWT_SECRET environment variable is required');
 }

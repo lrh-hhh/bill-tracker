@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -37,13 +38,22 @@ if (process.env.NODE_ENV === 'production') {
 
 const isDirectRun = process.argv[1] && (
   process.argv[1].endsWith('/index.ts') ||
-  process.argv[1].endsWith('/index.js')
+  process.argv[1].endsWith('\\index.ts') ||
+  process.argv[1].endsWith('/index.js') ||
+  process.argv[1].endsWith('\\index.js')
 );
 
+console.log('process.argv:', process.argv);
+console.log('isDirectRun:', isDirectRun);
+
 if (isDirectRun) {
+  console.log('Starting server...');
+  console.log('JWT_SECRET:', process.env.JWT_SECRET ? 'set' : 'not set');
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
+} else {
+  console.log('Not running as direct script, skipping listen');
 }
 
 export default app;
