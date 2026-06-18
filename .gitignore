@@ -7,6 +7,7 @@ node_modules/
 dist/
 build/
 client/dist/
+server/dist/
 
 # Environment
 .env
@@ -19,12 +20,14 @@ client/dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 
 # OS
 .DS_Store
@@ -34,3 +37,9 @@ Thumbs.db
 server/data/*.db
 server/data/*.db-wal
 server/data/*.db-shm
+
+# Test coverage
+coverage/
+
+# Misc
+*.tsbuildinfo
