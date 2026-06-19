@@ -5,7 +5,7 @@ import type {
 } from '../types';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://bill-tracker-api-bjic.onrender.com',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -38,12 +38,12 @@ api.interceptors.response.use(
 // 认证 API
 export const authAPI = {
   register: (data: { username: string; email: string; password: string }) =>
-    api.post<AuthResponse>('/auth/register', data),
+    api.post<AuthResponse>('/api/auth/register', data),
   
   login: (data: { username: string; password: string }) =>
-    api.post<AuthResponse>('/auth/login', data),
+    api.post<AuthResponse>('/api/auth/login', data),
   
-  getMe: () => api.get<User>('/auth/me')
+  getMe: () => api.get<User>('/api/auth/me')
 };
 
 // 账单 API
@@ -57,14 +57,14 @@ export interface BillFilters {
 }
 
 export const billsAPI = {
-  getAll: (filters?: BillFilters) => api.get<Bill[]>('/bills', { params: filters }),
+  getAll: (filters?: BillFilters) => api.get<Bill[]>('/api/bills', { params: filters }),
 
-  create: (data: CreateBillInput) => api.post<Bill>('/bills', data),
+  create: (data: CreateBillInput) => api.post<Bill>('/api/bills', data),
 
   update: (id: number, data: Partial<CreateBillInput>) =>
-    api.put<Bill>(`/bills/${id}`, data),
+    api.put<Bill>(`/api/bills/${id}`, data),
 
-  delete: (id: number) => api.delete(`/bills/${id}`)
+  delete: (id: number) => api.delete(`/api/bills/${id}`)
 };
 
 // 统计 API
@@ -75,23 +75,23 @@ export interface TrendData {
 
 export const statisticsAPI = {
   getMonthly: (month: string) =>
-    api.get<MonthlyStats>('/statistics/monthly', { params: { month } }),
+    api.get<MonthlyStats>('/api/statistics/monthly', { params: { month } }),
 
   getTrend: (months?: number) =>
-    api.get<TrendData>('/statistics/trend', { params: { months } })
+    api.get<TrendData>('/api/statistics/trend', { params: { months } })
 };
 
 // 目标 API
 export const goalsAPI = {
-  getAll: () => api.get<GoalsResponse>('/goals'),
+  getAll: () => api.get<GoalsResponse>('/api/goals'),
   
   create: (data: Omit<Goal, 'id' | 'user_id' | 'created_at'>) =>
-    api.post<Goal>('/goals', data),
+    api.post<Goal>('/api/goals', data),
   
   update: (id: number, data: Partial<Omit<Goal, 'id' | 'user_id' | 'created_at'>>) =>
-    api.put<Goal>(`/goals/${id}`, data),
+    api.put<Goal>(`/api/goals/${id}`, data),
   
-  delete: (id: number) => api.delete(`/goals/${id}`)
+  delete: (id: number) => api.delete(`/api/goals/${id}`)
 };
 
 export default api;
