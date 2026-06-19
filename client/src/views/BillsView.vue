@@ -209,6 +209,7 @@ async function handleSubmit() {
     }
 
     dialogVisible.value = false;
+    form.value = { amount: 0, category: '', date: '', note: '' };
     await loadBills();
   } catch (error) {
     ElMessage.error('操作失败');
