@@ -52,7 +52,7 @@ export function initDatabase() {
     );
   `);
 
-  if (process.env.NODE_ENV !== 'production') {
+  {
     const testUsers = [
       { username: 'test1', email: 'test1@example.com', password: 'password123' },
       { username: 'test2', email: 'test2@example.com', password: 'password123' }
