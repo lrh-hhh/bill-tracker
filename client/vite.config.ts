@@ -3,11 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 
 export default defineConfig({
-  base: '/bill-tracker/',
   plugins: [vue()],
-  define: {
-    'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL || '')
-  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src')
